@@ -1,0 +1,24 @@
+{
+  "name": "next-persist",
+  "version": "1.0.0",
+  "description": "Bridging the gap between client-side persistence and server-side rendering",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjsalvador/next-persist.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjsalvador/next-persist/issues"
+  },
+  "homepage": "https://github.com/mjsalvador/next-persist#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.22.0"
+  }
+}
