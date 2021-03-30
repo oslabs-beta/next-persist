@@ -17,7 +17,9 @@
     "url": "https://github.com/mjsalvador/next-persist/issues"
   },
   "homepage": "https://github.com/mjsalvador/next-persist#readme",
-  "dependencies": {},
+  "dependencies": {
+    "next-persist-test": "^1.0.0"
+  },
   "devDependencies": {
     "eslint": "^7.22.0"
   }
