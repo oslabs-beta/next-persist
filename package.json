@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/oslabs-beta/next-persist.git"
   },
-  "keywords": [],
+  "keywords": ["next.js", "react", "persist", "localStorage", "client-side rendering", "server-side rendering"],
   "author": "most.js",
   "license": "MIT",
   "bugs": {
