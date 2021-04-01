@@ -1,6 +1,6 @@
 {
   "name": "next-persist",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bridging the gap between client-side persistence and server-side rendering",
   "main": "src/next-persist.js",
   "scripts": {
@@ -10,7 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/oslabs-beta/next-persist.git"
   },
-  "keywords": ["next.js", "react", "persist", "localStorage", "client-side rendering", "server-side rendering"],
+  "keywords": [
+    "next.js",
+    "react",
+    "persist",
+    "localStorage",
+    "client-side rendering",
+    "server-side rendering"
+  ],
   "author": "most.js",
   "license": "MIT",
   "bugs": {
