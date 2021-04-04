@@ -2,7 +2,7 @@ const nextPersist = {};
 
 // writes to local storage
 nextPersist.writeStorage = (state) => {
-  if (typeof Window !== 'undefined') {
+  if (typeof window !== 'undefined') { 
     localStorage.setItem('state', JSON.stringify(state));
   } else {
     return state;
