@@ -27,7 +27,6 @@ nextPersist.getStorage = (nextPersistConfig, state) => {
     const clientState = localStorage.getItem(key);
     if (clientState) {
       const parsedClientState = JSON.parse(clientState);
-
       if (!allowList)
         return {
           ...state,
