@@ -1,31 +1,47 @@
 const nextPersist = {};
 
 // writes to local storage
-nextPersist.writeStorage = (state) => {
-  if (typeof Window !== 'undefined') {
-    localStorage.setItem('state', JSON.stringify(state));
+nextPersist.writeStorage = (nextPersistConfig, state) => {
+  const { key, allowList } = nextPersistConfig;
+
+  if (typeof window !== 'undefined') {
+    if (!allowList) {
+      localStorage.setItem(key, JSON.stringify(state));
+    } else {
+      const allowedState = allowList.reduce((acc, cur) => {
+        acc[cur] = state[cur];
+        return acc;
+      }, {});
+      localStorage.setItem(key, JSON.stringify(allowedState));
+    }
   } else {
-    return state;
+    return { err: 'LocalStorage not found.' };
   }
 };
 
 // retrieves from local storage
-nextPersist.getStorage = (persistConfig, state) => {
-  if (typeof Window !== 'undefined') {
-    const clientState = localStorage.getItem('state');
+nextPersist.getStorage = (nextPersistConfig, state) => {
+  const { key, allowList } = nextPersistConfig;
 
+  if (typeof window !== 'undefined') {
+    const clientState = localStorage.getItem(key);
     if (clientState) {
-      const { allowList } = persistConfig;
       const parsedClientState = JSON.parse(clientState);
 
-      const newState = allowList.reduce((acc, cur) => {
+      if (!allowList)
+        return {
+          ...state,
+          ...parsedClientState,
+        };
+
+      const allowedState = allowList.reduce((acc, cur) => {
         acc[cur] = parsedClientState[cur];
         return acc;
       }, {});
 
       return {
         ...state,
-        ...newState,
+        ...allowedState,
       };
     }
   }
