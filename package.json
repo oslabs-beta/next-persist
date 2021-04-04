@@ -23,9 +23,5 @@
   "bugs": {
     "url": "https://github.com/oslabs-beta/next-persist/issues"
   },
-  "homepage": "https://github.com/oslabs-beta/next-persist#readme",
-  "dependencies": {},
-  "devDependencies": {
-    "eslint": "^7.22.0"
-  }
+  "homepage": "https://github.com/oslabs-beta/next-persist#readme"
 }
