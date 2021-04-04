@@ -1,54 +1,83 @@
+/**
+ * @jest-environment jsdom
+ */
+
+const nextPersist = require('../src/next-persist');
 const { writeStorage, getStorage } = require('../src/next-persist');
 
-class MockLocalStorage {
-  constructor() {
-    this.storage = {}
-  };
-
-  getItem(key) {
-    return JSON.parse(this.storage[key]) || null;
-  }
-
-  setItem(key, value) {
-    console.log('key: ', key);
-    console.log('value: ', value);
-    this.storage[key] = value;
-  }
-
-  clear() {
-    this.storage = {}
-  }
-
-};
-
-const newState = {
-  foo: [1, 2, 3],
-  bar: {a : true, b : false},
-  baz: 'Hello world',
-};
-
-xdescribe('getStorage tests', () => {
-
-  // case one: if window is not undefined:
-
-    // we should retreive state from local storage
-
-    // we should update state with the state retreived from local storage
-
-  // case two: if window is undefined:
-    
-    // we should return the same state object we pass in 
-
-})
+let state = {};
+let nextPersistConfig = {};
 
 describe('writeStorage tests', () => {
 
-  // test one: if window is not undefined, we should write to local storage
-  it('writes a state object to local storage', () => {
-    writeStorage(newState);
-    expect(localStorage['state']).toBe(JSON.stringify(newState));
+  beforeEach(() => {
+    state.foo = [1, 2, 3];
+    state.bar = {a : true, b : false};
+    state.baz = 'Hello world!'
+
+    nextPersistConfig.key = 'state';
+    nextPersistConfig.allowList = null;
+  })
+
+  afterEach(() => {
+    state = {};
+    nextPersistConfig = {};
+  })
+
+  it('Saves the entire state to localStorage', () => {
+    writeStorage(nextPersistConfig, state);
+    expect(localStorage[nextPersistConfig.key]).toEqual(JSON.stringify(state));
   });
 
-  // test two: if window is undefined, we should return the same state object we pass in
+  it('Saves only the properties of state whitelisted on allowList to localStorage', () => {
+    nextPersistConfig.allowList = ['foo', 'bar'];
+    writeStorage(nextPersistConfig, state);
+    delete state.baz;
+    expect(localStorage[nextPersistConfig.key]).toEqual(JSON.stringify(state));
+  });
 
-})
+  // change jest-environment on line 2 from jsdom to node -> probably some jest configuration that automates this
+  xit('Returns an error if `window` is undefined', () => {
+    const error = writeStorage(nextPersistConfig, state);
+    expect(error.err).toBe('LocalStorage not found.');
+  })  
+
+});
+
+describe('getStorage tests', () => {
+
+  beforeEach(() => {
+    state.foo = [1, 2, 3];
+    state.bar = {a : true, b : false};
+    state.baz = 'Hello world!'
+
+    nextPersistConfig.key = 'state';
+    nextPersistConfig.allowList = null;
+  })
+
+  afterEach(() => {
+    state = {};
+    nextPersistConfig = {};
+  })
+
+  it('Retrieves the entire persisted state from localStorage and returns it', () => {
+    localStorage.setItem(nextPersistConfig.key, JSON.stringify(state));
+    const stateFromLocalStorage = getStorage(nextPersistConfig, state);
+    expect(stateFromLocalStorage).toEqual(state);
+  });
+
+  it('Retrieves only the properties of state whitelisted on allowList from localStorage', () => {
+    nextPersistConfig.allowList = ['foo', 'bar'];
+    localStorage.setItem(nextPersistConfig.key, JSON.stringify(state));
+    delete state.baz;
+    const stateFromLocalStorage = getStorage(nextPersistConfig, state);
+    expect(stateFromLocalStorage).toEqual(state);
+  })
+
+  // change jest-environment on line 2 from jsdom to node -> probably some jest configuration that automates this
+  xit('Returns the same state passed in if `window` is undefined', () => {
+    const sameState = getStorage(nextPersistConfig, state);
+    expect(sameState).toEqual(state);
+  });
+
+});
