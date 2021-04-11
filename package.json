@@ -1,6 +1,6 @@
 {
   "name": "next-persist",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Bridging the gap between client-side persistence and server-side rendering",
   "main": "src/next-persist.js",
   "scripts": {
@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/oslabs-beta/next-persist/issues"
   },
-  "homepage": "https://github.com/oslabs-beta/next-persist#readme"
+  "homepage": "https://github.com/oslabs-beta/next-persist#readme",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-redux": "^7.2.3"
+  }
 }

@@ -20,31 +20,18 @@ nextPersist.writeStorage = (nextPersistConfig, state) => {
 };
 
 // retrieves from local storage
-nextPersist.getStorage = (nextPersistConfig, state) => {
-  const { key, allowList } = nextPersistConfig;
+nextPersist.getStorage = (key, state) => {
 
   if (typeof window !== 'undefined') {
     const clientState = localStorage.getItem(key);
     if (clientState) {
       const parsedClientState = JSON.parse(clientState);
-      if (!allowList)
-        return {
-          ...state,
-          ...parsedClientState,
-        };
-
-      const allowedState = allowList.reduce((acc, cur) => {
-        acc[cur] = parsedClientState[cur];
-        return acc;
-      }, {});
-
       return {
         ...state,
-        ...allowedState,
+        ...parsedClientState,
       };
     }
   }
-
   return state;
 };
 
