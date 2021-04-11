@@ -21,7 +21,6 @@ nextPersist.writeStorage = (nextPersistConfig, state) => {
 
 // retrieves from local storage
 nextPersist.getStorage = (key, state) => {
-
   if (typeof window !== 'undefined') {
     const clientState = localStorage.getItem(key);
     if (clientState) {
