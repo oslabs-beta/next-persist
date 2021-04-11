@@ -1,27 +1,30 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
-import { writeStorage } from "next-persist";
+import { writeStorage } from './next-persist';
 
 const mapStateToProps = (state) => ({
-  state: state,
+  state,
 });
 
 class NextPersistWrapper extends Component {
-  constructor(props) {
-    super(props)
-  };
-
   render() {
+    if (this.props.wrapperConfig.combinedReducers) {
+      const { allowedKeys } = this.props.wrapperConfig;
+      const { allowedReducers } = this.props.wrapperConfig;
 
-    const allowedKeys = this.props.wrapperConfig.allowedKeys; 
-    const allowedReducers = this.props.wrapperConfig.allowedReducers; 
-
-    allowedReducers.forEach((allowedReducer, index) => {
+      allowedReducers.forEach((allowedReducer, index) => {
+        const nextPersistConfig = {
+          key: allowedKeys[index],
+        };
+        writeStorage(nextPersistConfig, this.props.state[allowedReducer]);
+      });
+    } else {
       const nextPersistConfig = {
-        key: allowedKeys[index],
-      }
-      writeStorage(nextPersistConfig, this.props.state[allowedReducer]); 
-    })
+        key: this.props.wrapperConfig.key,
+        allowList: this.props.wrapperConfig.allowList,
+      };
+      writeStorage(nextPersistConfig, this.props.state);
+    }
 
     return this.props.children;
   }
