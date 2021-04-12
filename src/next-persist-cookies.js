@@ -21,7 +21,7 @@ nextPersistCookie.setCookie = (nextPersistConfig, state) => {
 
 nextPersistCookie.getCookie = (req) => {
   if (req) {
-    return cookie.parse(req.headers.cookie || '');
+    return cookie.parse(req ? req.ctx.req.headers.cookie || "" : global.cookie);  
   } 
   return cookie.parse(document.cookie);
 };
