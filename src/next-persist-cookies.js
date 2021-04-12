@@ -2,7 +2,6 @@
 import cookie from 'cookie'
 import Cookie from 'js-cookie'
 
-
 const nextPersistCookie = {};
 
 nextPersistCookie.setCookie = (nextPersistConfig, state) => {

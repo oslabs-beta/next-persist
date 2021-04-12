@@ -25,7 +25,6 @@ class NextPersistWrapper extends Component {
       };
       writeStorage(nextPersistConfig, this.props.state);
     }
-
     return this.props.children;
   }
 }
