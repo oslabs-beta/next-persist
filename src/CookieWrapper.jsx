@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { writeStorage } from './next-persist';
+import { setCookie } from '/next-persist';
 
 const mapStateToProps = (state) => ({
   state,
@@ -16,14 +16,14 @@ class NextPersistWrapper extends Component {
         const nextPersistConfig = {
           key: allowedKeys[index],
         };
-        writeStorage(nextPersistConfig, this.props.state[allowedReducer]);
+        setCookie(nextPersistConfig, this.props.state[allowedReducer]);
       });
     } else {
       const nextPersistConfig = {
         key: this.props.wrapperConfig.key,
         allowList: this.props.wrapperConfig.allowList,
       };
-      writeStorage(nextPersistConfig, this.props.state);
+      setCookie(nextPersistConfig, this.props.state);
     }
     return this.props.children;
   }
