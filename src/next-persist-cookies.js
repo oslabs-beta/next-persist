@@ -38,11 +38,22 @@ nextPersistCookie.setCookie = (cookieConfig, state) => {
 /*
 retrieves cookie containing state
 arguments:
-  req (object) - request object from the context object from Next.js data-fetching methods
+  if application is running server-side:
+  req (object) - request property from the context object from Next.js data-fetching methods
+
+  if application is running client-side:
+  req (boolean) - should be 'false'
+  state (object) - object from application containing state
+  cookieName (string) - the name of the cookie specified in setCooking config
 */
 
-// if application is running server-side, parse and return cookie from request object
-// if application is running client-side, parse and return cooking from document object
-nextPersistCookie.getCookie = (req) => cookie.parse(req ? req.ctx.req.headers.cookie || '' : document.cookie);
+nextPersistCookie.getCookie = (req, state, cookieName) => {
+  // if application is running client-side, parse and return cookie from browser
+  if (!req) {
+    const stateFromCookie = Cookie.get(cookieName);
+    return stateFromCookie ? JSON.parse(stateFromCookie) : state
+  } // if application is running server-side, parse and return cooking from request body
+  else return cookie.parse(req.ctx.req.headers.cookie || '');
+} 
 
 module.exports = nextPersistCookie;
