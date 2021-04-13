@@ -122,7 +122,7 @@ Import ` { getCookie } ` into your frontend at the top level of your Next.js app
 ### Config
 
 
-TEXT FOR CONFIG GOES HERE.
+...ADDITIONAL TEXT FOR CONFIG GOES HERE...
 
 
 ```
@@ -140,7 +140,7 @@ const config = {
 };
 ```
 
-Maybe some more explainer text of Config down here. Maybe about the difference between single and combined reducers.
+...MAYBE SOME MORE EXPLAINER TEXT ABOUT CONFIG HERE. DIFFERENCE BETWEEN SINGLE AND COMBINED REDUCERS...
 
 ---
 
@@ -184,11 +184,14 @@ Maybe some more explainer text of Config down here. Maybe about the difference b
 
 In each reducer file we need to import `getStorage` from `next-persist`.
 
+Declare a constant and assign it the value of the evaluated result of calling `getStorage` method.
+
 `getStorage` takes two arguments:
 
-* a string that will be saved on local storage as the key on local storage
-* an object that is the initial state that declared in the reducer file
+* a string that will be the key that is saved on local storage
+* an object that is the initial state that is declared in the reducer file
 
+Pass in the newly declared constant into reducer as state.
 
 
 ```
@@ -222,7 +225,6 @@ export default demoReducer;
 
 ```
 
-Here we can put any additional info about the way getStorage is working with the reducer.
 
 ---
 
