@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="./assets/NEXT-PERSIST-A.png" alt="logo" width="300"/>
+  <img src="./assets/NEXT-PERSIST-A-trim.png" alt="logo" width="100%"/>
   <br />
   </a>
   <a href="https://github.com/oslabs-beta/next-persist/stargazers">
-    <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/oslabs-beta/next-persist?color=%23C9E465&style=for-the-badge">
+    <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/oslabs-beta/next-persist?color=%233ac0ba%0A&style=for-the-badge">
   </a>
   <a href="https://www.npmjs.com/package/next-persist">
-    <img alt="npm" src="https://img.shields.io/npm/v/next-persist?color=%23C9E465&style=for-the-badge">
+    <img alt="npm" src="https://img.shields.io/npm/v/next-persist?color=%233ac0ba%0A&style=for-the-badge">
   </a>
   <a href="https://github.com/oslabs-beta/next-persist/graphs/contributors">
-    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/oslabs-beta/periqles?color=%23C9E465&style=for-the-badge">
+    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/oslabs-beta/next-persist?color=%233ac0ba%0A&style=for-the-badge">
   <a href="https://github.com/oslabs-beta/next-persist/blob/main/LICENSE">
-    <img alt="NPM" src="https://img.shields.io/npm/l/next-persist?color=%23C9E465&style=for-the-badge">
+    <img alt="NPM" src="https://img.shields.io/npm/l/next-persist?color=%233ac0ba%0A&style=for-the-badge">
   </a>
 </p>
 
@@ -130,13 +130,11 @@ Import ` { getCookie } ` into your frontend at the top level of your Next.js app
 
 const config = {
   method: either 'localStorage' or 'cookies'
-  key: 'key that will be saved to localStorage',
   allowList: {
     reducerName: ['allowList', 'forReducer'],
     secondReducer: []
   },
-  allowedKeys: ["marketState"],
-  combinedReducers: true,
+
 };
 ```
 
@@ -153,7 +151,7 @@ const config = {
     import "../styles/globals.css";
     import { Provider } from "react-redux";
     import store from "../client/store";
-    import PersistWrapper from 'next-persist/src/CookieWrapper.jsx'
+    import PersistWrapper from 'next-persist/src/NextPersistWrapper';
 
     const yourConfigCanBeAnyName = {
       key: 'use this key if single reducer',
