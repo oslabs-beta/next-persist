@@ -21,17 +21,18 @@ arguments:
 */
 
 nextPersistCookie.setCookie = (cookieConfig, state) => {
-  const { key, allowList } = cookieConfig;
+  const key = Object.keys(cookieConfig)[0];
+  const allowList = Object.values(cookieConfig)[0];
   // if allowList was not defined in cookieConfig, sets cookie containing entire state
-  if (!allowList) {
-    Cookie.set(key, state);
+  if (allowList.length === 0) {
+    Cookie.set(key, JSON.stringify(state));
   } else {
     // sets cookie containing only properties listed in allowList
     const allowedState = allowList.reduce((acc, cur) => {
       acc[cur] = state[cur];
       return acc;
     }, {});
-    Cookie.set(key, allowedState);
+    Cookie.set(key, JSON.stringify(allowedState));
   }
 };
 
@@ -47,13 +48,13 @@ arguments:
   cookieName (string) - the name of the cookie specified in setCooking config
 */
 
-nextPersistCookie.getCookie = (req, state, cookieName) => {
+nextPersistCookie.getCookie = (req, cookieName, state) => {
   // if application is running client-side, parse and return cookie from browser
   if (!req) {
     const stateFromCookie = Cookie.get(cookieName);
-    return stateFromCookie ? JSON.parse(stateFromCookie) : state
+    return stateFromCookie ? JSON.parse(stateFromCookie) : state;
   } // if application is running server-side, parse and return cooking from request body
   else return cookie.parse(req.ctx.req.headers.cookie || '');
-} 
+};
 
 module.exports = nextPersistCookie;
