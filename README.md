@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/next-persist-placeholder-logo.png" alt="logo" width="300"/>
+  <img src="./assets/NEXT-PERSIST-A.png" alt="logo" width="300"/>
   <br />
   </a>
   <a href="https://github.com/oslabs-beta/next-persist/stargazers">
@@ -150,7 +150,6 @@ const config = {
 
     Example: 
 
-    ```
     import "../styles/globals.css";
     import { Provider } from "react-redux";
     import store from "../client/store";
@@ -176,7 +175,7 @@ const config = {
     };
 
     export default MyApp;
-    ```
+
 ---
 
 
