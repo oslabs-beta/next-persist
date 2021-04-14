@@ -29,27 +29,22 @@ class NextPersistWrapper extends Component {
       method = setCookie;
     }
 
-    // if redux combines reducers, each reducer's state gets saved to local storage
-    // under a unique key specified in wrapperConfig
-    if (this.props.wrapperConfig.combinedReducers) {
-      const { allowedKeys } = this.props.wrapperConfig;
-      const { allowedReducers } = this.props.wrapperConfig;
+    const { allowList } = this.props.wrapperConfig;
+    const nextPersistConfig = {};
 
-      allowedReducers.forEach((allowedReducer, index) => {
-        const nextPersistConfig = {
-          key: allowedKeys[index],
-        };
+    // if no allowlist provided save all state to their corresponding keys
+    if (!allowList) {
+      const key = Object.keys(this.props.state)[0];
+      nextPersistConfig[key] = [];
+      method(nextPersistConfig, this.props.state[key]);
+    }
+    // if allowlist exists pass subconfigs of allowed reducers into storage method
+    else {
+      const allowedReducers = Object.keys(allowList);
+      allowedReducers.forEach((allowedReducer) => {
+        nextPersistConfig[allowedReducer] = allowList[allowedReducer];
         method(nextPersistConfig, this.props.state[allowedReducer]);
       });
-
-      // otherwise, the single reducer's state gets saved to local storage
-      // according to allowList configuration
-    } else {
-      const nextPersistConfig = {
-        key: this.props.wrapperConfig.key,
-        allowList: this.props.wrapperConfig.allowList,
-      };
-      method(nextPersistConfig, this.props.state);
     }
     return this.props.children;
   }

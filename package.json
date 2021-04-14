@@ -1,6 +1,6 @@
 {
   "name": "next-persist",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Bridging the gap between client-side persistence and server-side rendering",
   "main": "src/next-persist.js",
   "scripts": {
