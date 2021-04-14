@@ -18,12 +18,13 @@ arguments:
 */
 
 nextPersist.setStorage = (storageConfig, state) => {
-  const { key, allowList } = storageConfig;
+  const key = Object.keys(storageConfig)[0];
+  const allowList = Object.values(storageConfig)[0];
 
   // if application is running client-side, localStorage is accessible
   if (typeof window !== 'undefined') {
     // if allowList was not defined in persistConfig, set all propertiesfrom state to localStorage
-    if (!allowList) {
+    if (allowList.length === 0) {
       localStorage.setItem(key, JSON.stringify(state));
     } else {
       // only sets properties listed in allowList to localStorage
