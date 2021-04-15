@@ -48,13 +48,18 @@ arguments:
   cookieName (string) - the name of the cookie specified in setCooking config
 */
 
-nextPersistCookie.getCookie = (req, cookieName, state) => {
+nextPersistCookie.getCookie = (...args) => {
   // if application is running client-side, parse and return cookie from browser
-  if (!req) {
+  if (typeof args[0] === 'string') {
+    const cookieName = args[0];
+    const state = args[1];
     const stateFromCookie = Cookie.get(cookieName);
     return stateFromCookie ? JSON.parse(stateFromCookie) : state;
   } // if application is running server-side, parse and return cooking from request body
-  else return cookie.parse(req.ctx.req.headers.cookie || '');
+  else {
+    const req = args[0].ctx.req;
+    return cookie.parse(req.headers.cookie || '');
+  }
 };
 
 module.exports = nextPersistCookie;

@@ -32,12 +32,9 @@ Bridging the gap between client-side persistence and server-side rendering.
 <br>
 Well now you can! next-persist provides a simple solution for your dynamic, isomorphic web applications. Just import next-persist, set up a quick config and incorporate our functions. We do the rest, delivering you the benefits of server side rendering and persistent client data.
 </p>
-
->*“It just works.”  
-    -- Kyle Combs*
-    </td>
+   </td>
     <td>
-      <img src="./assets/next-persist_app-screenshot.png" alt="screenshot of next-persist at _app level" width="100%">
+      <img src="./assets/screenshot1.png" alt="screenshot of next-persist at _app level" width="100%">
     </td>
   </tr>
 </table>
@@ -79,39 +76,44 @@ To add `<NextPersistWrapper />`, `getStorage`, and `getCookie` to your project, 
 
 ### Prerequisites
 
-* Redux (v. 4.0.5 and up)
+- Redux (v. 4.0.5 and up)
 
   ```
   npm install redux
   ```
-* React (v. 16.8.0 and up)
+
+- React (v. 16.8.0 and up)
   ```
   npm install react
   ```
----
 
+---
 
 ### Installation
 
-1. Install next-persist from the terminal.
+1.  Install next-persist from the terminal.
     ```
     npm install next-persist
     ```
-2. Import `<NextPersistWrapper />` into your frontend at top level of your Next.js app.
+2.  Import `<NextPersistWrapper />` into your frontend at top level of your Next.js app.
     ```
-    // _app.jsx
+    // _app.js
     import PersistWrapper from 'next-persist/src/NextPersistWrapper';
     ```
-3. If utilizing localStorage to persist client-state: <br>
-Import ` { getStorage } ` into your reducer(s).
+3.  If utilizing localStorage to persist client-state:<br>
+    Import `{ getStorage }` into your reducer(s) you plan to persist.
     ```
-    // yourReducer.jsx
+    // yourReducer.js
     import { getStorage } from 'next-persist'
     ```
-4. If utilizing cookies to persist client-state:<br>
-Import ` { getCookie } ` into your frontend at the top level of your Next.js app.
+4.  If utilizing cookies to persist client-state:<br>
+    Import `{ getCookie }` into your frontend at the top level of your Next.js app as well as into any reducer(s) you plan to persist.
+
     ```
-    // _app.jsx
+    // _app.js
+    import { getCookie } from 'next-persist/src/next-persist-cookies'
+
+    // yourReducer.js
     import { getCookie } from 'next-persist/src/next-persist-cookies'
     ```
 
@@ -121,122 +123,125 @@ Import ` { getCookie } ` into your frontend at the top level of your Next.js app
 
 ### Config
 
-
-...ADDITIONAL TEXT FOR CONFIG GOES HERE...
-
+next-persist requires a simple config object allowing you to make changes to the behaviour of our package. First, a **required** `method` key, dictating which storage method you would like to use. Second, an optional `allowList` key holding an object.
 
 ```
-//_app.jsx
+  //_app.js
 
-const config = {
-  method: either 'localStorage' or 'cookies'
-  allowList: {
-    reducerName: ['allowList', 'forReducer'],
-    secondReducer: []
-  },
-
-};
+  const npConfig = {
+    method: 'localStorage' or 'cookies'
+    allowList: {
+      reducerOne: ['stateItemOne', 'stateItemTwo'],
+      reducerTwo: [],
+    },
+  };
 ```
 
-...MAYBE SOME MORE EXPLAINER TEXT ABOUT CONFIG HERE. DIFFERENCE BETWEEN SINGLE AND COMBINED REDUCERS...
+The `allowList` key can be setup to allow only certain reducers to store only certain pieces of state to the chosen storage method. The keys on `allowList` have to correspond with the keys of the reducers in `combineReducers()`. To store only certain pieces of state from a reducer, set the value as an array holding the names of the state items as strings. If you wish to store all state from a reducer, set the value as an empty array. If no allowList is provided, **next-persist** will store all state from all reducers to the chosen storage method.
 
 ---
 
 ### Wrapper
 
-`<PersistWrapper wrapperConfig={YOUR CONFIG HERE}/>` takes one prop that MUST HAVE THE LABEL: ``` wrapperConfig```, which takes as argument configuration object that the developer declares (can be any name) in the _app component. 
+`<PersistWrapper />` requires one prop with the label: `wrapperConfig`, which takes as argument config object that the developer declares in the `_app` component.
 
-    Example: 
+```
+  Example:
 
-    import "../styles/globals.css";
-    import { Provider } from "react-redux";
-    import store from "../client/store";
-    import PersistWrapper from 'next-persist/src/NextPersistWrapper';
+  import { Provider } from "react-redux";
+  import store from "../client/store";
+  import PersistWrapper from 'next-persist/src/NextPersistWrapper';
 
-    const yourConfigCanBeAnyName = {
-      key: 'use this key if single reducer',
-      allowlist: ['use this if using single reducer'],
-      allowedReducers: ["use, this, key, if, utilizing, combinedReducer"],
-      allowedKeys: ["use, this, key, if, utilizing, combinedReducer"],
-      combinedReducers: boolean (true if utilizing combinedReducer/ false otherwise),
-    };
+  const npConfig = {
+    method: 'localStorage'
+    allowList: {
+      reducerOne: ['stateItemOne', 'stateItemTwo'],
+    },
+  };
 
-    const MyApp = ({ Component, pageProps }) => {
-      console.log('MyApp pageProps: ', pageProps);
-      return (
-        <Provider store={store}>
-          <PersistWrapper wrapperConfig={yourConfigCanBeAnyName}>
-            <Component {...pageProps} />
-          </PersistWrapper>
-        </Provider>
-      );
-    };
+  const MyApp = ({ Component, pageProps }) => {
+    return (
+      <Provider store={store}>
+        <PersistWrapper wrapperConfig={npConfig}>
+          <Component {...pageProps} />
+        </PersistWrapper>
+      </Provider>
+    );
+  };
 
-    export default MyApp;
+  export default MyApp;
+```
 
 ---
 
-
 ### Reducer
 
-In each reducer file we need to import `getStorage` from `next-persist`.
+In each reducer file we need to import `getStorage` from `'next-persist'` or or `getCookies` from `'next-persist/src/next-persist-cookies'`.
 
-Declare a constant and assign it the value of the evaluated result of calling `getStorage` method.
+Declare a constant and assign it the value of the evaluated result of calling `getStorage` or `getCookies` method.
 
-`getStorage` takes two arguments:
+`getStorage` or `getCookies` takes two arguments:
 
-* a string that will be the key that is saved on local storage
-* an object that is the initial state that is declared in the reducer file
+- a string: the reducer key that is saved in storage
+- an object: the initial state declared in the reducer file
 
-Pass in the newly declared constant into reducer as state.
-
+Pass in the newly declared constant into the reducer as a default parameter for state.
 
 ```
-import * as types from '../constants/actionTypes';
-import { getStorage } from 'next-persist';
+  Example:
 
-const initialState = {
-  // initialState goes here
-};
+  import * as types from '../constants/actionTypes';
+  import { getStorage } from 'next-persist';
+  // or
+  // import { getCookies } from 'next-persist/src/next-persist-cookies'
+
+  const initialState = {
+    // initialState goes here
+    stateItemOne: true,
+    stateItemTwo: 0,
+    stateItemThree: 'foo',
+  };
+
+  const persistedState = getStorage('reducerOne', initialState);
+  // or
+  // const persistedState = getCookies('reducerOne', initialState);
 
 
-
-const persistedState = getStorage('demoState', initialState);
-
-const demoReducer = (state = persistedState, action) => {
-  let counter;
-  let change;
-  let lightStatus;
-  let initialTime;
-  let currentTime;
-  let username;
-  let userIcon;
-
-   // all your switch case logic in here
+  const firstReducer = (state = persistedState, action) => {
+    // switch case logic in here
+    switch (action.type) {
     default:
       return state;
-  }
-};
+    }
+  };
 
-export default demoReducer;
-
+  export default firstReducer;
 ```
-
 
 ---
 
 ### Cookies
 
-Here we will talk about cookies, and maybe put a warning that perissting sensitvie data on cookies isn't the safest.
+Utilizing the cookie storage method offers the benefit of utilizing client state with `getInitialProps`. However it cannot be used to store large amounts of data due to the limits on cookie size.
+
+In this example we invoke `getCookie` in `getInitialProps` and it will return back an object holding all the persisted state values, saved under the key of their reducer name.
 
 ```
-CODE OF _app PAGE THAT SHOWS COOKIES USAGE
-```
-```
-CODE OF reducer PAGE THAT SHOWS COOKIE USAGE
-```
-We can add more text about cookies here, if we want to.
+  Example:
 
+  MyApp.getInitialProps = async (ctx) => {
+    const cookieState = getCookie(ctx);
+    return {
+      pageProps: cookieState,
+    };
+  }
+
+  export default MyApp;
+```
+
+---
+
+## **WARNING** - NEVER STORE UNENCRYPTED PERSONAL DATA TO CLIENT STORAGE
 
 ---
 
@@ -244,11 +249,9 @@ We can add more text about cookies here, if we want to.
 
 If you would like to contribute to next-persist, please [fork this repo](https://github.com/oslabs-beta/next-persist). Commit your changes to a well-named feature branch then open a pull request. We appreciate your contributions to this open-source project!
 
-
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
 
 ## Maintainers
 
@@ -259,7 +262,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Built with:
 
-* [Next.js](https://nextjs.org/)
-* [React](https://reactjs.org/)
-* [React-Redux](https://react-redux.js.org/)
-* the support of [OSLabs](https://github.com/open-source-labs)
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [React-Redux](https://react-redux.js.org/)
+- the support of [OSLabs](https://github.com/open-source-labs)
