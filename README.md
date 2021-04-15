@@ -27,9 +27,9 @@ Bridging the gap between client-side persistence and server-side rendering.
   <tr>
     <td width="60%">
 <p>'What is next-persist?' Well, next-persist is a lightweight NPM package developed to simplify the process of storing and reconciling non-critical persistent client state while retaining the benefits of server side rendering and static site generation provided by Next.js.</p>
-
 <p>Wouldn't it be nice to gain the benefits of Next.js while still providing the users with some sort of dynamic state persistence? How about without worrying about the design and added costs of additional database management systems?
-<br>
+</p>
+<p>
 Well now you can! next-persist provides a simple solution for your dynamic, isomorphic web applications. Just import next-persist, set up a quick config and incorporate our functions. We do the rest, delivering you the benefits of server side rendering and persistent client data.
 </p>
    </td>
@@ -241,7 +241,7 @@ In this example we invoke `getCookie` in `getInitialProps` and it will return ba
 
 ---
 
-## **WARNING** - NEVER STORE UNENCRYPTED PERSONAL DATA TO CLIENT STORAGE
+### **WARNING** - NEVER STORE UNENCRYPTED PERSONAL DATA TO CLIENT STORAGE
 
 ---
 
