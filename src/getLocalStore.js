@@ -1,4 +1,14 @@
-function getLocalStore (key, state) {
+/**
+ * ************************************
+ *
+ * @module next-persist
+ * @author most-js
+ * @description module that contains function to get state from localStorage
+ *
+ * ************************************
+ */
+
+export default function getLocalStore(key, state) {
   // if application is running client-side, localStorage is accessible
   if (typeof window !== 'undefined') {
     const clientState = localStorage.getItem(key);
@@ -16,6 +26,4 @@ function getLocalStore (key, state) {
   // if localStorage doesn't contain the key user queries or application isn't running client-side,
   // return original state that was passed in
   return state;
-};
-
-module.exports = getLocalStore;
+}

@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import { setCookieStore } from './setCookieStore';
 import { setLocalStore } from './setLocalStore';
 
-const NextPersistWrapper = (props) => {
+export default NextPersistWrapper = (props) => {
   const state = useSelector((state) => state);
 
   useEffect(() => {
@@ -49,5 +49,3 @@ const NextPersistWrapper = (props) => {
 
   return props.children;
 };
-
-export default NextPersistWrapper;
