@@ -12,8 +12,8 @@
 
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { setCookieStore } from './next-persist-cookieStore';
-import { setLocalStore } from './next-persist-localStore';
+import { setCookieStore } from './setCookieStore';
+import { setLocalStore } from './setLocalStore';
 
 const NextPersistWrapper = (props) => {
   const state = useSelector((state) => state);
