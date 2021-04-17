@@ -23,11 +23,5 @@
   "bugs": {
     "url": "https://github.com/oslabs-beta/next-persist/issues"
   },
-  "homepage": "https://github.com/oslabs-beta/next-persist#readme",
-  "dependencies": {
-    "cookie": "^0.4.1",
-    "js-cookie": "^2.2.1",
-    "react": "^17.0.2",
-    "react-redux": "^7.2.3"
-  }
+  "homepage": "https://github.com/oslabs-beta/next-persist#readme"
 }
