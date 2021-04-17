@@ -24,10 +24,12 @@
     "url": "https://github.com/oslabs-beta/next-persist/issues"
   },
   "homepage": "https://github.com/oslabs-beta/next-persist#readme",
-  "devDependencies": {
+    "dependencies": {
     "cookie": "^0.4.1",
+    "js-cookie": "^2.2.1"
+  },
+  "devDependencies": {
     "jest": "^26.6.3",
-    "js-cookie": "^2.2.1",
     "react": "^17.0.2",
     "react-redux": "^7.2.3"
   },
