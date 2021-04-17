@@ -1,4 +1,14 @@
-function setLocalStore (storageConfig, state) {
+/**
+ * ************************************
+ *
+ * @module  next-persist
+ * @author  most-js
+ * @description function to save state to localStorage
+ *
+ * ************************************
+ */
+
+function setLocalStore(storageConfig, state) {
   const key = Object.keys(storageConfig)[0];
   const allowList = Object.values(storageConfig)[0];
 
@@ -19,6 +29,6 @@ function setLocalStore (storageConfig, state) {
   } else {
     return { err: 'LocalStorage not found.' };
   }
-};
+}
 
 module.exports = setLocalStore;

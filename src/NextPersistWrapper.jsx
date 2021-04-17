@@ -12,8 +12,8 @@
 
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { setCookieStore } from './setCookieStore';
-import { setLocalStore } from './setLocalStore';
+import setCookieStore from './setCookieStore';
+import setLocalStore from './setLocalStore';
 
 const NextPersistWrapper = (props) => {
   const state = useSelector((state) => state);
@@ -22,9 +22,9 @@ const NextPersistWrapper = (props) => {
     // determines method to persist state
     let method;
     if (props.wrapperConfig.method === 'localStorage') {
-      return setLocalStore;
+      method = setLocalStore;
     } else if (props.wrapperConfig.method === 'cookies') {
-      return setCookieStore;
+      method = setCookieStore;
     }
 
     const { allowList } = props.wrapperConfig;

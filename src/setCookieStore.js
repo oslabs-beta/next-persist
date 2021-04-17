@@ -1,6 +1,16 @@
+/**
+ * ************************************
+ *
+ * @module  next-persist
+ * @author  most-js
+ * @description function to save state to cookies
+ *
+ * ************************************
+ */
+
 const Cookie = require('js-cookie');
 
-function setCookieStore (cookieConfig, state) {
+function setCookieStore(cookieConfig, state) {
   const key = Object.keys(cookieConfig)[0];
   const allowList = Object.values(cookieConfig)[0];
   // if allowList was not defined in cookieConfig, sets cookie containing entire state
@@ -14,6 +24,6 @@ function setCookieStore (cookieConfig, state) {
     }, {});
     Cookie.set(key, JSON.stringify(allowedState));
   }
-};
+}
 
 module.exports = setCookieStore;
