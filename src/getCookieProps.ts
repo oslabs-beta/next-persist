@@ -12,9 +12,10 @@ import cookie from 'cookie';
 
 import { NextPageContext } from 'next';
 
-interface Context extends NextPageContext {}
-
-export default function getCookieStore(ctx) {
-  const req = ctx.ctx.req;
-  return cookie.parse(req.headers.cookie || '');
+export default function getCookieStore(
+  ctx: NextPageContext
+): { [key: string]: string } | string {
+  // checking if running on server or client
+  if (ctx.req === undefined) return '';
+  else return cookie.parse(ctx.req.headers.cookie || '');
 }

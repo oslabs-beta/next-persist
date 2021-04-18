@@ -4,7 +4,8 @@
   "description": "Bridging the gap between client-side persistence and server-side rendering",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,9 @@
     "@types/cookie": "^0.4.0",
     "@types/js-cookie": "^2.2.6",
     "@types/next": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.24.0",
     "jest": "^26.6.3",
     "react": "^17.0.2",
     "react-redux": "^7.2.3",
