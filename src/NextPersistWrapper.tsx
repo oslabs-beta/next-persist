@@ -36,9 +36,9 @@ interface WrapperProps {
 
 type Method = (config: AllowListObject, state: LooseObject) => void;
 
-// type NextPersistWrapper = () => JSX.Element;
+type NextPersistWrapper = (props: WrapperProps) => React.ReactNode;
 
-export default NextPersistWrapper = (props: WrapperProps) => {
+const NextPersistWrapper = (props: WrapperProps): React.ReactNode => {
   const state: LooseObject = useSelector((state) => state);
 
   useEffect(() => {
@@ -75,3 +75,5 @@ export default NextPersistWrapper = (props: WrapperProps) => {
 
   return props.children;
 };
+
+export default NextPersistWrapper;
