@@ -70,7 +70,7 @@ Well now you can! next-persist provides a simple solution for your dynamic, isom
 
 ## Getting Started
 
-To add `<NextPersistWrapper />`, `getStorage`, and `getCookie` to your project, follow these steps.
+To add `<NextPersistWrapper />`, `getLocalStore`, and `getCookieStore` to your project, follow these steps.
 
 ---
 
@@ -101,20 +101,20 @@ To add `<NextPersistWrapper />`, `getStorage`, and `getCookie` to your project, 
     import PersistWrapper from 'next-persist/src/NextPersistWrapper';
     ```
 3.  If utilizing localStorage to persist client-state:<br>
-    Import `{ getStorage }` into your reducer(s) you plan to persist.
+    Import `{ getLocalStore }` into your reducer(s) you plan to persist.
     ```
     // yourReducer.js
-    import { getStorage } from 'next-persist'
+    import { getLocalStore } from 'next-persist'
     ```
 4.  If utilizing cookies to persist client-state:<br>
-    Import `{ getCookie }` into your frontend at the top level of your Next.js app as well as into any reducer(s) you plan to persist.
+    Import `{ getCookieProps }` into your frontend at the top level of your Next.js app as well as importing `{ getCookieStore }` into any reducer(s) you plan to persist.
 
     ```
     // _app.js
-    import { getCookie } from 'next-persist/src/next-persist-cookies'
+    import { getCookieProps } from 'next-persist'
 
     // yourReducer.js
-    import { getCookie } from 'next-persist/src/next-persist-cookies'
+    import { getCookieStore } from 'next-persist'
     ```
 
 ---
@@ -176,11 +176,11 @@ The `allowList` key can be setup to allow only certain reducers to store only ce
 
 ### Reducer
 
-In each reducer file we need to import `getStorage` from `'next-persist'` or or `getCookies` from `'next-persist/src/next-persist-cookies'`.
+In each reducer file we need to import `getLocalStore` or `getCookieStore` from `'next-persist'`.
 
-Declare a constant and assign it the value of the evaluated result of calling `getStorage` or `getCookies` method.
+Declare a constant and assign it the value of the evaluated result of calling `getLocalStore` or `getCookieStore` method.
 
-`getStorage` or `getCookies` takes two arguments:
+`getLocalStore` or `getCookieStore` takes two arguments:
 
 - a string: the reducer key that is saved in storage
 - an object: the initial state declared in the reducer file
@@ -191,9 +191,9 @@ Pass in the newly declared constant into the reducer as a default parameter for 
   Example:
 
   import * as types from '../constants/actionTypes';
-  import { getStorage } from 'next-persist';
+  import { getLocalStore } from 'next-persist';
   // or
-  // import { getCookies } from 'next-persist/src/next-persist-cookies'
+  // import { getCookieStore } from 'next-persist'
 
   const initialState = {
     // initialState goes here
@@ -202,9 +202,9 @@ Pass in the newly declared constant into the reducer as a default parameter for 
     stateItemThree: 'foo',
   };
 
-  const persistedState = getStorage('reducerOne', initialState);
+  const persistedState = getLocalStore('reducerOne', initialState);
   // or
-  // const persistedState = getCookies('reducerOne', initialState);
+  // const persistedState = getCookieStore('reducerOne', initialState);
 
 
   const firstReducer = (state = persistedState, action) => {
@@ -224,13 +224,13 @@ Pass in the newly declared constant into the reducer as a default parameter for 
 
 Utilizing the cookie storage method offers the benefit of utilizing client state with `getInitialProps`. However it cannot be used to store large amounts of data due to the limits on cookie size.
 
-In this example we invoke `getCookie` in `getInitialProps` and it will return back an object holding all the persisted state values, saved under the key of their reducer name.
+In this example we invoke `getCookieProps` in `getInitialProps` and it will return back an object holding all the persisted state values, saved under the key of their reducer name.
 
 ```
   Example:
 
-  MyApp.getInitialProps = async (ctx) => {
-    const cookieState = getCookie(ctx);
+  MyApp.getInitialProps = async ({ ctx }) => {
+    const cookieState = getCookieProps(ctx);
     return {
       pageProps: cookieState,
     };
