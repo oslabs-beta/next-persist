@@ -8,7 +8,24 @@
  * ************************************
  */
 
-export default function setLocalStore(storageConfig, state) {
+interface LooseObject {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
+interface AllowListObject {
+  [key: string]: string[];
+}
+
+interface StorageConfigObject {
+  method: string;
+  allowList: AllowListObject;
+}
+
+export default function setLocalStore(
+  storageConfig: StorageConfigObject,
+  state: LooseObject
+): void | { [key: string]: string } {
   const key = Object.keys(storageConfig)[0];
   const allowList = Object.values(storageConfig)[0];
 
@@ -19,7 +36,7 @@ export default function setLocalStore(storageConfig, state) {
       localStorage.setItem(key, JSON.stringify(state));
     } else {
       // only sets properties listed in allowList to localStorage
-      const allowedState = allowList.reduce((acc, cur) => {
+      const allowedState = allowList.reduce((acc: LooseObject, cur: string) => {
         acc[cur] = state[cur];
         return acc;
       }, {});

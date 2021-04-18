@@ -1,0 +1,12 @@
+export {};
+
+declare global {
+  interface allowListObject {
+    [key: string]: string[];
+  }
+
+  interface storageConfigObject {
+    method: string;
+    allowList: allowListObject;
+  }
+}

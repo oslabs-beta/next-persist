@@ -10,7 +10,15 @@
 
 import jsCookie from 'js-cookie';
 
-export default function getCookieStore(key: string, state) {
+interface LooseObject {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
+export default function getCookieStore(
+  key: string,
+  state: LooseObject
+): LooseObject {
   const stateFromCookie = jsCookie.get(key);
   return stateFromCookie ? JSON.parse(stateFromCookie) : state;
 }

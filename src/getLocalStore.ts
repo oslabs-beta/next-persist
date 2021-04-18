@@ -8,7 +8,15 @@
  * ************************************
  */
 
-export default function getLocalStore(key, state) {
+interface LooseObject {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
+export default function getLocalStore(
+  key: string,
+  state: LooseObject
+): LooseObject {
   // if application is running client-side, localStorage is accessible
   if (typeof window !== 'undefined') {
     const clientState = localStorage.getItem(key);
