@@ -15,34 +15,48 @@ import { useSelector } from 'react-redux';
 import setCookieStore from './setCookieStore';
 import setLocalStore from './setLocalStore';
 
-export default NextPersistWrapper = (props) => {
+interface AllowListObject {
+  [key: string]: string[];
+}
+
+interface StorageConfigObject {
+  method: string;
+  allowList: AllowListObject;
+}
+
+interface WrapperProps {
+  wrapperConfig: StorageConfigObject;
+  children: React.ReactNode;
+}
+
+export default NextPersistWrapper = (props: WrapperProps) => {
   const state = useSelector((state) => state);
 
   useEffect(() => {
     // determines method to persist state
     let method;
     if (props.wrapperConfig.method === 'localStorage') {
-      return setLocalStore;
+      method = setLocalStore;
     } else if (props.wrapperConfig.method === 'cookies') {
-      return setCookieStore;
+      method = setCookieStore;
     }
 
     const { allowList } = props.wrapperConfig;
-    const nextPersistConfig = {};
+    const allowListConfig: AllowListObject = {};
 
     // if no allowList - save all state to their corresponding keys
     if (!allowList) {
       const key = Object.keys(state)[0];
-      nextPersistConfig[key] = [];
-      method(nextPersistConfig, state[key]);
+      allowListConfig[key] = [];
+      method(allowListConfig, state[key]);
     }
 
     // if allowList - pass subconfigs of allowed reducers into storage method
     else {
       const allowedReducers = Object.keys(allowList);
       allowedReducers.forEach((allowedReducer) => {
-        nextPersistConfig[allowedReducer] = allowList[allowedReducer];
-        method(nextPersistConfig, state[allowedReducer]);
+        allowListConfig[allowedReducer] = allowList[allowedReducer];
+        method(allowListConfig, state[allowedReducer]);
       });
     }
   }, [state]);
