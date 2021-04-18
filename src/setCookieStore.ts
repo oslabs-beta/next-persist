@@ -19,17 +19,17 @@ interface AllowListObject {
   [key: string]: string[];
 }
 
-interface StorageConfigObject {
-  method: string;
-  allowList: AllowListObject;
-}
+// interface StorageConfigObject {
+//   method: string;
+//   allowList: AllowListObject;
+// }
 
 export default function setCookieStore(
-  cookieConfig: StorageConfigObject,
+  config: AllowListObject,
   state: LooseObject
 ): void {
-  const key = Object.keys(cookieConfig)[0];
-  const allowList = Object.values(cookieConfig)[0];
+  const key = Object.keys(config)[0];
+  const allowList = Object.values(config)[0];
   // if allowList was not defined in cookieConfig, sets cookie containing entire state
   if (allowList.length === 0) {
     jsCookie.set(key, JSON.stringify(state));

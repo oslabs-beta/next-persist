@@ -17,17 +17,17 @@ interface AllowListObject {
   [key: string]: string[];
 }
 
-interface StorageConfigObject {
-  method: string;
-  allowList: AllowListObject;
-}
+// interface StorageConfigObject {
+//   method: string;
+//   allowList: AllowListObject;
+// }
 
 export default function setLocalStore(
-  storageConfig: StorageConfigObject,
+  config: AllowListObject,
   state: LooseObject
 ): void | { [key: string]: string } {
-  const key = Object.keys(storageConfig)[0];
-  const allowList = Object.values(storageConfig)[0];
+  const key = Object.keys(config)[0];
+  const allowList = Object.values(config)[0];
 
   // if application is running client-side, localStorage is accessible
   if (typeof window !== 'undefined') {

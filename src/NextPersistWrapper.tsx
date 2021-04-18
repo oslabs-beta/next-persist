@@ -15,6 +15,11 @@ import { useSelector } from 'react-redux';
 import setCookieStore from './setCookieStore';
 import setLocalStore from './setLocalStore';
 
+interface LooseObject {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
 interface AllowListObject {
   [key: string]: string[];
 }
@@ -29,34 +34,41 @@ interface WrapperProps {
   children: React.ReactNode;
 }
 
+type Method = (config: AllowListObject, state: LooseObject) => void;
+
+// type NextPersistWrapper = () => JSX.Element;
+
 export default NextPersistWrapper = (props: WrapperProps) => {
-  const state = useSelector((state) => state);
+  const state: LooseObject = useSelector((state) => state);
 
   useEffect(() => {
     // determines method to persist state
-    let method;
+    let method: Method;
     if (props.wrapperConfig.method === 'localStorage') {
       method = setLocalStore;
     } else if (props.wrapperConfig.method === 'cookies') {
       method = setCookieStore;
-    }
+    } else
+      method = () => {
+        return { err: 'No method detected' };
+      };
 
     const { allowList } = props.wrapperConfig;
-    const allowListConfig: AllowListObject = {};
+    const mockStorageConfig: AllowListObject = {};
 
     // if no allowList - save all state to their corresponding keys
     if (!allowList) {
       const key = Object.keys(state)[0];
-      allowListConfig[key] = [];
-      method(allowListConfig, state[key]);
+      mockStorageConfig[key] = [];
+      method(mockStorageConfig, state[key]);
     }
 
     // if allowList - pass subconfigs of allowed reducers into storage method
     else {
       const allowedReducers = Object.keys(allowList);
       allowedReducers.forEach((allowedReducer) => {
-        allowListConfig[allowedReducer] = allowList[allowedReducer];
-        method(allowListConfig, state[allowedReducer]);
+        mockStorageConfig[allowedReducer] = allowList[allowedReducer];
+        method(mockStorageConfig, state[allowedReducer]);
       });
     }
   }, [state]);
