@@ -15,7 +15,7 @@ import { NextPageContext } from 'next';
 export default function getCookieStore(
   ctx: NextPageContext
 ): { [key: string]: string } | string {
-  // checking if running on server or client
+  // checking if running on build or request
   if (ctx.req === undefined) return '';
   else return cookie.parse(ctx.req.headers.cookie || '');
 }

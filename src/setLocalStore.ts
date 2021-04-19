@@ -8,20 +8,6 @@
  * ************************************
  */
 
-interface LooseObject {
-  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}
-
-interface AllowListObject {
-  [key: string]: string[];
-}
-
-// interface StorageConfigObject {
-//   method: string;
-//   allowList: AllowListObject;
-// }
-
 export default function setLocalStore(
   config: AllowListObject,
   state: LooseObject
