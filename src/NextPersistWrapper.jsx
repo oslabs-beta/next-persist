@@ -10,47 +10,44 @@
  * ************************************
  */
 
-import { Component } from 'react';
-import { connect } from 'react-redux';
-import { setCookie } from './next-persist-cookies';
-import { setStorage } from './next-persist';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import setCookieStore from './setCookieStore';
+import setLocalStore from './setLocalStore';
 
-const mapStateToProps = (state) => ({
-  state,
-});
+const NextPersistWrapper = (props) => {
+  const state = useSelector((state) => state);
 
-class NextPersistWrapper extends Component {
-  render() {
+  useEffect(() => {
     // determines method to persist state
     let method;
-    if (this.props.wrapperConfig.method === 'localStorage') {
-      method = setStorage;
-    } else if (this.props.wrapperConfig.method === 'cookies') {
-      method = setCookie;
+    if (props.wrapperConfig.method === 'localStorage') {
+      method = setLocalStore;
+    } else if (props.wrapperConfig.method === 'cookies') {
+      method = setCookieStore;
     }
 
-    const { allowList } = this.props.wrapperConfig;
+    const { allowList } = props.wrapperConfig;
     const nextPersistConfig = {};
 
-    // if no allowlist provided save all state to their corresponding keys
+    // if no allowList - save all state to their corresponding keys
     if (!allowList) {
-      const key = Object.keys(this.props.state)[0];
+      const key = Object.keys(state)[0];
       nextPersistConfig[key] = [];
-      method(nextPersistConfig, this.props.state[key]);
+      method(nextPersistConfig, state[key]);
     }
-    // if allowlist exists pass subconfigs of allowed reducers into storage method
+
+    // if allowList - pass subconfigs of allowed reducers into storage method
     else {
       const allowedReducers = Object.keys(allowList);
       allowedReducers.forEach((allowedReducer) => {
         nextPersistConfig[allowedReducer] = allowList[allowedReducer];
-        method(nextPersistConfig, this.props.state[allowedReducer]);
+        method(nextPersistConfig, state[allowedReducer]);
       });
     }
-    return this.props.children;
-  }
-}
+  }, [state]);
 
-// connects wrapper to redux store
-const PersistWrapper = connect(mapStateToProps)(NextPersistWrapper);
+  return props.children;
+};
 
-export default PersistWrapper;
+export default NextPersistWrapper;
