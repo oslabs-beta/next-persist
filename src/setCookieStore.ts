@@ -27,7 +27,7 @@ export function setCookieStore(
   const allowList = Object.values(config)[0];
   // if allowList was not defined in cookieConfig, sets cookie containing entire state
   if (allowList.length === 0) {
-    jsCookie.set(key, JSON.stringify(state));
+    jsCookie.set(key, JSON.stringify(state), { expires: 365 });
   } else {
     // sets cookie containing only properties listed in allowList
     const allowedState = allowList.reduce((acc: LooseObject, cur: string) => {
