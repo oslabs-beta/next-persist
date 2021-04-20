@@ -97,7 +97,7 @@ To add `<NextPersistWrapper />`, `getLocalStore`, and `getCookieStore` to your p
 2.  Import `<NextPersistWrapper />` into your frontend at top level of your Next.js app.
     ```
     // _app.js
-    import PersistWrapper from 'next-persist/src/NextPersistWrapper';
+    import PersistWrapper from 'next-persist/lib/NextPersistWrapper';
     ```
 3.  If utilizing localStorage to persist client-state:<br>
     Import `{ getLocalStore }` into your reducer(s) you plan to persist.
@@ -150,7 +150,7 @@ The `allowList` key can be setup to allow only certain reducers to store only ce
 
   import { Provider } from "react-redux";
   import store from "../client/store";
-  import PersistWrapper from 'next-persist/src/NextPersistWrapper';
+  import PersistWrapper from 'next-persist/lib/NextPersistWrapper';
 
   const npConfig = {
     method: 'localStorage'
