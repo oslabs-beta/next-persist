@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS",
+    "lib": ["es2015", "dom"],
+    "allowJs": true,
+    "jsx": "react",
+    "declaration": true,
+    "outDir": "./lib",
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "files": [
+    "./src/getCookieProps.ts",
+    "./src/getCookieStore.ts",
+    "./src/getLocalStore.ts",
+    "./src/index.ts",
+    "./src/NextPersistWrapper.tsx",
+    "./src/setCookieStore.ts",
+    "./src/setLocalStore.ts"
+  ]
+}

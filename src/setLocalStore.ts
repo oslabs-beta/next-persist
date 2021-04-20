@@ -1,16 +1,28 @@
 /**
  * ************************************
  *
- * @module  next-persist
- * @author  most-js
- * @description function to save state to localStorage
+ * @module next-persist
+ * @author most-js
+ * @description module that contains function to write state to localStorage
  *
  * ************************************
  */
 
-function setLocalStore(storageConfig, state) {
-  const key = Object.keys(storageConfig)[0];
-  const allowList = Object.values(storageConfig)[0];
+interface LooseObject {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
+interface AllowListObject {
+  [key: string]: string[];
+}
+
+export function setLocalStore(
+  config: AllowListObject,
+  state: LooseObject
+): void | { [key: string]: string } {
+  const key = Object.keys(config)[0];
+  const allowList = Object.values(config)[0];
 
   // if application is running client-side, localStorage is accessible
   if (typeof window !== 'undefined') {
@@ -19,7 +31,7 @@ function setLocalStore(storageConfig, state) {
       localStorage.setItem(key, JSON.stringify(state));
     } else {
       // only sets properties listed in allowList to localStorage
-      const allowedState = allowList.reduce((acc, cur) => {
+      const allowedState = allowList.reduce((acc: LooseObject, cur: string) => {
         acc[cur] = state[cur];
         return acc;
       }, {});
@@ -30,5 +42,3 @@ function setLocalStore(storageConfig, state) {
     return { err: 'LocalStorage not found.' };
   }
 }
-
-module.exports = setLocalStore;

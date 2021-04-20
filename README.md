@@ -58,7 +58,6 @@ Well now you can! next-persist provides a simple solution for your dynamic, isom
           <li><a href="#cookies">Cookies</a></li>
         </ul>
       </li>
-  <!--     <li><a href="#roadmap">Roadmap</a></li> -->
       <li><a href="#contributing">Contributing</a></li>
       <li><a href="#license">License</a></li>
       <li><a href="#maintainers">Maintainers</a></li>
@@ -98,7 +97,7 @@ To add `<NextPersistWrapper />`, `getLocalStore`, and `getCookieStore` to your p
 2.  Import `<NextPersistWrapper />` into your frontend at top level of your Next.js app.
     ```
     // _app.js
-    import PersistWrapper from 'next-persist/src/NextPersistWrapper';
+    import PersistWrapper from 'next-persist/lib/NextPersistWrapper';
     ```
 3.  If utilizing localStorage to persist client-state:<br>
     Import `{ getLocalStore }` into your reducer(s) you plan to persist.
@@ -107,7 +106,12 @@ To add `<NextPersistWrapper />`, `getLocalStore`, and `getCookieStore` to your p
     import { getLocalStore } from 'next-persist'
     ```
 4.  If utilizing cookies to persist client-state:<br>
+<<<<<<< HEAD
+    Import `{ getCookieProps }` into your frontend at the top level of your Next.js app<br>
+    Import `{ getCookieStore }` into any reducer(s) you plan to persist.
+=======
     Import `{ getCookieProps }` into your frontend at the top level of your Next.js app as well as importing `{ getCookieStore }` into any reducer(s) you plan to persist.
+>>>>>>> main
 
     ```
     // _app.js
@@ -150,7 +154,7 @@ The `allowList` key can be setup to allow only certain reducers to store only ce
 
   import { Provider } from "react-redux";
   import store from "../client/store";
-  import PersistWrapper from 'next-persist/src/NextPersistWrapper';
+  import PersistWrapper from 'next-persist/lib/NextPersistWrapper';
 
   const npConfig = {
     method: 'localStorage'

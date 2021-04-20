@@ -1,14 +1,19 @@
 /**
  * ************************************
  *
- * @module  next-persist
- * @author  most-js
- * @description function to get localStorage containing state
+ * @module next-persist
+ * @author most-js
+ * @description module that contains function to get state from localStorage
  *
  * ************************************
  */
 
-function getLocalStore(key, state) {
+interface LooseObject {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
+export function getLocalStore(key: string, state: LooseObject): LooseObject {
   // if application is running client-side, localStorage is accessible
   if (typeof window !== 'undefined') {
     const clientState = localStorage.getItem(key);
@@ -27,5 +32,3 @@ function getLocalStore(key, state) {
   // return original state that was passed in
   return state;
 }
-
-module.exports = getLocalStore;
