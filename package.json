@@ -1,7 +1,7 @@
 {
   "name": "next-persist",
   "version": "1.2.1-alpha.6",
-  "description": "Bridging the gap between client-side persistence and server-side rendering",
+  "description": "Client-side persistence with server-side rendering",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
@@ -16,8 +16,10 @@
   "keywords": [
     "next.js",
     "react",
+    "redux",
     "persist",
     "localStorage",
+    "cookies",
     "client-side rendering",
     "server-side rendering"
   ],
