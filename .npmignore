@@ -3,4 +3,4 @@ __tests__/
 assets/
 src/
 package-lock.json
-tsconfig*.json
+tsconfig.json
