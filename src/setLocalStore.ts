@@ -17,7 +17,7 @@ interface AllowListObject {
   [key: string]: string[];
 }
 
-export default function setLocalStore(
+export function setLocalStore(
   config: AllowListObject,
   state: LooseObject
 ): void | { [key: string]: string } {

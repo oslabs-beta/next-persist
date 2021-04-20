@@ -12,8 +12,8 @@
 
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import setCookieStore from './setCookieStore';
-import setLocalStore from './setLocalStore';
+import { setCookieStore } from './setCookieStore';
+import { setLocalStore } from './setLocalStore';
 
 interface LooseObject {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -36,7 +36,7 @@ interface WrapperProps {
 
 type Method = (config: AllowListObject, state: LooseObject) => void;
 
-type NextPersistWrapper = (props: WrapperProps) => React.ReactNode;
+// type NextPersistWrapper = (props: WrapperProps) => React.ReactNode;
 
 const NextPersistWrapper = (props: WrapperProps): React.ReactNode => {
   const state: LooseObject = useSelector((state) => state);

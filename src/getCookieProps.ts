@@ -17,9 +17,7 @@ interface LooseObject {
   [key: string]: any;
 }
 
-export default function getCookieStore(
-  ctx: NextPageContext
-): LooseObject | string {
+export function getCookieProps(ctx: NextPageContext): LooseObject | string {
   // checking if running on build or request
   if (ctx.req === undefined) return '';
   else return cookie.parse(ctx.req.headers.cookie || '');

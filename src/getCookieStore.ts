@@ -15,10 +15,7 @@ interface LooseObject {
   [key: string]: any;
 }
 
-export default function getCookieStore(
-  key: string,
-  state: LooseObject
-): LooseObject {
+export function getCookieStore(key: string, state: LooseObject): LooseObject {
   const stateFromCookie = jsCookie.get(key);
   return stateFromCookie ? JSON.parse(stateFromCookie) : state;
 }

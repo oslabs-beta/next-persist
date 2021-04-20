@@ -19,7 +19,7 @@ interface AllowListObject {
   [key: string]: string[];
 }
 
-export default function setCookieStore(
+export function setCookieStore(
   config: AllowListObject,
   state: LooseObject
 ): void {
