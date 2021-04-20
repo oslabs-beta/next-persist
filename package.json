@@ -1,6 +1,6 @@
 {
   "name": "next-persist",
-  "version": "1.2.1-alpha.1",
+  "version": "1.2.1-alpha.2",
   "description": "Bridging the gap between client-side persistence and server-side rendering",
   "main": "./lib/esm/index.js",
   "scripts": {
