@@ -8,6 +8,11 @@
  * ************************************
  */
 
+interface LooseObject {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
 export default function getLocalStore(
   key: string,
   state: LooseObject

@@ -12,6 +12,11 @@ import cookie from 'cookie';
 
 import { NextPageContext } from 'next';
 
+interface LooseObject {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
 export default function getCookieStore(
   ctx: NextPageContext
 ): LooseObject | string {
