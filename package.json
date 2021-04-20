@@ -1,8 +1,14 @@
 {
   "name": "next-persist",
+<<<<<<< HEAD
   "version": "1.2.1",
   "description": "Client-side persistence with server-side rendering",
   "main": "lib/index.js",
+=======
+  "version": "1.2.0",
+  "description": "Bridging the gap between client-side persistence and server-side rendering",
+  "main": "index.js",
+>>>>>>> main
   "scripts": {
     "test": "jest",
     "lint": "eslint . --ext .ts",
