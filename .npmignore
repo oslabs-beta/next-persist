@@ -1,3 +1,6 @@
+.*
 __tests__/
-package-lock.json
 assets/
+src/
+package-lock.json
+tsconfig*.json

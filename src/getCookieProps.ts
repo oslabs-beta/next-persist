@@ -14,7 +14,7 @@ import { NextPageContext } from 'next';
 
 export default function getCookieStore(
   ctx: NextPageContext
-): { [key: string]: string } | string {
+): LooseObject | string {
   // checking if running on build or request
   if (ctx.req === undefined) return '';
   else return cookie.parse(ctx.req.headers.cookie || '');
