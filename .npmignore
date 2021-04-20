@@ -4,3 +4,7 @@ assets/
 src/
 package-lock.json
 tsconfig.json
+
+
+
+types/
