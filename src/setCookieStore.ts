@@ -34,6 +34,6 @@ export function setCookieStore(
       acc[cur] = state[cur];
       return acc;
     }, {});
-    jsCookie.set(key, JSON.stringify(allowedState));
+    jsCookie.set(key, JSON.stringify(allowedState), { expires: 365 });
   }
 }
