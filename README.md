@@ -106,13 +106,9 @@ To add `<NextPersistWrapper />`, `getLocalStore`, and `getCookieStore` to your p
     import { getLocalStore } from 'next-persist'
     ```
 4.  If utilizing cookies to persist client-state:<br>
-<<<<<<< HEAD
-    Import `{ getCookieProps }` into your frontend at the top level of your Next.js app<br>
-    Import `{ getCookieStore }` into any reducer(s) you plan to persist.
-=======
-    Import `{ getCookieProps }` into your frontend at the top level of your Next.js app as well as importing `{ getCookieStore }` into any reducer(s) you plan to persist.
->>>>>>> main
 
+    Import `{ getCookieProps }` into your frontend at the top level of your Next.js app as well as importing `{ getCookieStore }` into any reducer(s) you plan to persist.
+    
     ```
     // _app.js
     import { getCookieProps } from 'next-persist'
