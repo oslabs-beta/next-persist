@@ -19,8 +19,6 @@
 <p align="center">
 Bridging the gap between client-side persistence and server-side rendering.
   <br />
-    <a href="https://www.mostjs.org">Homepage →</a><br>
-    <a href="https://www.mostjs.org/demo">Demo →</a>
 </p>
 
 <table>
