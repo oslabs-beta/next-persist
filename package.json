@@ -14,6 +14,8 @@
     "url": "git+https://github.com/oslabs-beta/next-persist.git"
   },
   "keywords": [
+    "next-persist",
+    "next",
     "next.js",
     "react",
     "redux",
