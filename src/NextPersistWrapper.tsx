@@ -1,32 +1,12 @@
-/**
- * ************************************
- *
- * @module  next-persist
- * @author  most-js
- * @description a component that persists state to localStorage or cookies.
- *              this component should wrap Next.js components
- *              and be wrapped by Redux's Provider component
- *
- * ************************************
- */
-
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import {setCookieStore} from './setCookieStore';
-import {setLocalStore} from './setLocalStore';
-
-interface LooseObject {
-  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}
-
-interface AllowListObject {
-  [key: string]: string[];
-}
+import setCookieStore from './setCookieStore';
+import setLocalStore from './setLocalStore';
+import { NextPersistConfig, LooseObject } from './types';
 
 interface StorageConfigObject {
-  method: string;
-  allowList: AllowListObject;
+  method: 'localStorage' | 'cookies';
+  allowList: { [key: string]: string[] };
 }
 
 interface WrapperProps {
@@ -34,46 +14,27 @@ interface WrapperProps {
   children: React.ReactNode;
 }
 
-type Method = (config: AllowListObject, state: LooseObject) => void;
-
-// type NextPersistWrapper = (props: WrapperProps) => React.ReactNode;
-
-const NextPersistWrapper = (props: WrapperProps): React.ReactNode => {
-  const state: LooseObject = useSelector((state) => state);
+const NextPersistWrapper: React.FC<WrapperProps> = ({ wrapperConfig, children }) => {
+  const state: LooseObject = useSelector((state: LooseObject) => state);
 
   useEffect(() => {
-    // determines method to persist state
-    let method: Method;
-    if (props.wrapperConfig.method === 'localStorage') {
-      method = setLocalStore;
-    } else if (props.wrapperConfig.method === 'cookies') {
-      method = setCookieStore;
-    } else
-      method = () => {
-        return { err: 'No method detected' };
-      };
+    const { method, allowList } = wrapperConfig;
+    const persistMethod = method === 'localStorage' ? setLocalStore : setCookieStore;
 
-    const { allowList } = props.wrapperConfig;
-    const mockStorageConfig: AllowListObject = {};
-
-    // if no allowList - save all state to their corresponding keys
-    if (!allowList) {
-      const key = Object.keys(state)[0];
-      mockStorageConfig[key] = [];
-      method(mockStorageConfig, state[key]);
-    }
-
-    // if allowList - pass subconfigs of allowed reducers into storage method
-    else {
-      const allowedReducers = Object.keys(allowList);
-      allowedReducers.forEach((allowedReducer) => {
-        mockStorageConfig[allowedReducer] = allowList[allowedReducer];
-        method(mockStorageConfig, state[allowedReducer]);
+    if (Object.keys(allowList).length === 0) {
+      Object.keys(state).forEach((key) => {
+        const config: NextPersistConfig = { key, allowList: [] };
+        persistMethod(config, state);
+      });
+    } else {
+      Object.keys(allowList).forEach((key) => {
+        const config: NextPersistConfig = { key, allowList: allowList[key] || [] };
+        persistMethod(config, state[key]);
       });
     }
-  }, [state]);
+  }, [state, wrapperConfig]);
 
-  return props.children;
+  return <>{children}</>;
 };
 
 export default NextPersistWrapper;
