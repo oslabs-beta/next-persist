@@ -12,13 +12,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
-  "files": [
-    "./src/getCookieProps.ts",
-    "./src/getCookieStore.ts",
-    "./src/getLocalStore.ts",
-    "./src/index.ts",
-    "./src/NextPersistWrapper.tsx",
-    "./src/setCookieStore.ts",
-    "./src/setLocalStore.ts"
-  ]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "exclude": ["node_modules"]
 }
