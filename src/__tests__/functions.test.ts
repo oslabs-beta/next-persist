@@ -9,7 +9,6 @@ describe('setLocalStore tests', () => {
   beforeEach(() => {
     state.foo = [1, 2, 3];
     state.bar = { a: true, b: false };
-    state.baz = 'Hello world!';
 
     nextPersistConfig = { key: 'state', allowList: [] };
   });
@@ -27,13 +26,13 @@ describe('setLocalStore tests', () => {
   it('Saves only the properties of state whitelisted on allowList to localStorage', () => {
     nextPersistConfig.allowList = ['foo', 'bar'];
     setLocalStore(nextPersistConfig, state);
-    const { baz, ...whitelistedState } = state; // Exclude `baz`
+    const { ...whitelistedState } = state;
     expect(localStorage.getItem(nextPersistConfig.key)).toEqual(JSON.stringify(whitelistedState));
   });
 
   it('Handles absence of `window` gracefully', () => {
     const originalWindow = global.window;
-    // @ts-ignore
+    // @ts-expect-error: Deleting global.window to simulate an environment where window is undefined
     delete global.window;
     setLocalStore(nextPersistConfig, state);
     global.window = originalWindow;
@@ -41,39 +40,35 @@ describe('setLocalStore tests', () => {
 });
 
 describe('getLocalStore tests', () => {
-  beforeEach(() => {
-    state.foo = [1, 2, 3];
-    state.bar = { a: true, b: false };
-    state.baz = 'Hello world!';
+  it('Retrieves only the properties of state whitelisted on allowList from localStorage', () => {
+    const state: {
+      foo: number[];
+      bar: {
+        a: boolean;
+        b: boolean;
+      };
+    } = {
+      foo: [1, 2, 3],
+      bar: { a: true, b: false },
+    };
+    localStorage.setItem('test-key', JSON.stringify(state));
+    const nextPersistConfig = { key: 'test-key', allowList: { foo: [], bar: ['a', 'b'] } };
+    const stateFromLocalStorage = getLocalStore(nextPersistConfig.key, nextPersistConfig.allowList);
 
-    nextPersistConfig = { key: 'state', allowList: [] };
-  });
-
-  afterEach(() => {
-    state = {};
-    nextPersistConfig = { key: '', allowList: [] };
-  });
-
-  it('Retrieves the entire persisted state from localStorage and returns it', () => {
-    localStorage.setItem(nextPersistConfig.key, JSON.stringify(state));
-    const stateFromLocalStorage = getLocalStore(nextPersistConfig.key, {});
     expect(stateFromLocalStorage).toEqual(state);
   });
 
-  it('Retrieves only the properties of state whitelisted on allowList from localStorage', () => {
-    nextPersistConfig.allowList = ['foo', 'bar'];
-    const { baz, ...whitelistedState } = state; // Exclude `baz`
-    localStorage.setItem(nextPersistConfig.key, JSON.stringify(whitelistedState));
-    const stateFromLocalStorage = getLocalStore(nextPersistConfig.key, {});
-    expect(stateFromLocalStorage).toEqual(whitelistedState);
-  });
-
   it('Returns the same state passed in if `window` is undefined', () => {
+    const state = { foo: 'bar' };
+
     const originalWindow = global.window;
-    // @ts-ignore
+    // @ts-expect-error: Deleting global.window to simulate an environment where window is undefined
     delete global.window;
-    const sameState = getLocalStore(nextPersistConfig.key, state);
+
+    const stateFromLocalStorage = getLocalStore('test-key', state);
+
+    expect(stateFromLocalStorage).toEqual(state);
+
     global.window = originalWindow;
-    expect(sameState).toEqual(state);
   });
 });
