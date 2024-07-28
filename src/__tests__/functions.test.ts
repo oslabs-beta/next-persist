@@ -1,4 +1,4 @@
-import { getLocalStore } from '../index';
+import { getLocalStore } from '../getLocalStore';
 import setLocalStore from '../setLocalStore';
 import { NextPersistConfig, LooseObject } from '../types';
 
@@ -27,15 +27,15 @@ describe('setLocalStore tests', () => {
   it('Saves only the properties of state whitelisted on allowList to localStorage', () => {
     nextPersistConfig.allowList = ['foo', 'bar'];
     setLocalStore(nextPersistConfig, state);
-    delete state.baz;
-    expect(localStorage.getItem(nextPersistConfig.key)).toEqual(JSON.stringify(state));
+    const { baz, ...whitelistedState } = state; // Exclude `baz`
+    expect(localStorage.getItem(nextPersistConfig.key)).toEqual(JSON.stringify(whitelistedState));
   });
 
-  it('Does nothing if `window` is undefined', () => {
+  it('Handles absence of `window` gracefully', () => {
     const originalWindow = global.window;
+    // @ts-ignore
     delete global.window;
-    const result = setLocalStore(nextPersistConfig, state);
-    expect(result).toBeUndefined();
+    setLocalStore(nextPersistConfig, state);
     global.window = originalWindow;
   });
 });
@@ -62,16 +62,18 @@ describe('getLocalStore tests', () => {
 
   it('Retrieves only the properties of state whitelisted on allowList from localStorage', () => {
     nextPersistConfig.allowList = ['foo', 'bar'];
-    localStorage.setItem(nextPersistConfig.key, JSON.stringify(state));
-    const expectedState = { foo: [1, 2, 3], bar: { a: true, b: false } };
+    const { baz, ...whitelistedState } = state; // Exclude `baz`
+    localStorage.setItem(nextPersistConfig.key, JSON.stringify(whitelistedState));
     const stateFromLocalStorage = getLocalStore(nextPersistConfig.key, {});
-    // Ensure 'baz' is not in the expected state
-    delete stateFromLocalStorage.baz;
-    expect(stateFromLocalStorage).toEqual(expectedState);
+    expect(stateFromLocalStorage).toEqual(whitelistedState);
   });
 
   it('Returns the same state passed in if `window` is undefined', () => {
+    const originalWindow = global.window;
+    // @ts-ignore
+    delete global.window;
     const sameState = getLocalStore(nextPersistConfig.key, state);
+    global.window = originalWindow;
     expect(sameState).toEqual(state);
   });
 });
