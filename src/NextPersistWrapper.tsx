@@ -15,7 +15,7 @@ interface WrapperProps {
 }
 
 const NextPersistWrapper: React.FC<WrapperProps> = ({ wrapperConfig, children }) => {
-  const state: LooseObject = useSelector((state: LooseObject) => state);
+  const state = useSelector((state: LooseObject) => state);
 
   useEffect(() => {
     const { method, allowList } = wrapperConfig;
@@ -24,12 +24,12 @@ const NextPersistWrapper: React.FC<WrapperProps> = ({ wrapperConfig, children })
     if (Object.keys(allowList).length === 0) {
       Object.keys(state).forEach((key) => {
         const config: NextPersistConfig = { key, allowList: [] };
-        persistMethod(config, state);
+        persistMethod(config, state[key] as LooseObject);
       });
     } else {
       Object.keys(allowList).forEach((key) => {
         const config: NextPersistConfig = { key, allowList: allowList[key] || [] };
-        persistMethod(config, state[key]);
+        persistMethod(config, state[key] as LooseObject);
       });
     }
   }, [state, wrapperConfig]);
