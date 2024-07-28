@@ -1,12 +1,16 @@
 import '@testing-library/jest-dom';
 import './setupGlobals';
 
-(global as any).localStorage = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
+const mockStorage: Storage = {
+  length: 0,
   clear: jest.fn(),
+  getItem: jest.fn(),
+  key: jest.fn(),
+  removeItem: jest.fn(),
+  setItem: jest.fn(),
 };
+
+(global as unknown as { localStorage: Storage }).localStorage = mockStorage;
 
 jest.mock('js-cookie', () => ({
   get: jest.fn(),
