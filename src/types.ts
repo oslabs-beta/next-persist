@@ -4,5 +4,5 @@ export interface NextPersistConfig {
 }
 
 export interface LooseObject {
-  [key: string]: any;
+  [key: string]: unknown;
 }
