@@ -6,5 +6,12 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
-  ]
+  ],
+  "env": {
+    "jest": true,
+    "node": true
+  },
+  "globals": {
+    "global": "readonly"
+  }
 }

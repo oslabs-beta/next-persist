@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES6",
     "module": "CommonJS",
     "lib": ["es2015", "dom"],
     "allowJs": true,
@@ -10,15 +10,11 @@
     "isolatedModules": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true
   },
-  "files": [
-    "./src/getCookieProps.ts",
-    "./src/getCookieStore.ts",
-    "./src/getLocalStore.ts",
-    "./src/index.ts",
-    "./src/NextPersistWrapper.tsx",
-    "./src/setCookieStore.ts",
-    "./src/setLocalStore.ts"
-  ]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "exclude": ["node_modules", "**/*.d.ts"]
 }
